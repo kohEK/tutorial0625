@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'password',
+            'id',
             # 'email',
             'blog'
 

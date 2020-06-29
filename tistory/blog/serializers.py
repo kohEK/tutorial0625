@@ -6,7 +6,7 @@ from blog.models import Comment, Blog
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['owner', 'text_comment', 'username', 'password']
+        fields = ['owner', 'text_post','text_comment', 'username', 'password']
 
 
 class BlogSerializer(serializers.ModelSerializer):

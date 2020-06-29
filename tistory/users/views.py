@@ -36,12 +36,6 @@ class UserViewSet(mixins.CreateModelMixin,
 
     @action(detail=False, methods=['post'])
     def login(self, request):
-        # serializer = self.serializer_class(data=request.data,
-        #                                    context={'request': request})
-        # serializer.is_valid(raise_exception=True)
-        # username = serializer.validated_data['username']
-        # password = serializer.validated_data['password']
-        # serializer.save()
         user = authenticate(request=request,
                             username=request.data.get('username'),
                             password=request.data.get('password')
@@ -55,16 +49,6 @@ class UserViewSet(mixins.CreateModelMixin,
             'user_id': user.pk,
 
         })
-        # username = self.request.data.get('username')
-        # password = self.request.data.get('password')
-        # user = User.objects.get(username=username)
-        # if user.check_password(password):
-        #     token, __ = Token.objects.get_or_create(user=user)
-        #     data = {
-        #         "token": token
-        #     }
-        #     return Response(data, status=status.HTTP_201_CREATED)
-        # return Response(status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['delete'])
     def logout(self, request):
