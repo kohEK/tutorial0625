@@ -6,7 +6,8 @@ from blog.models import Comment, Blog
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['owner', 'text_post','text_comment', 'username', 'password']
+        # password 같은 credential 노출 될수 있으므로 신중
+        fields = ['id', 'owner', 'text_post', 'text_comment', 'username', 'password']
 
 
 class BlogSerializer(serializers.ModelSerializer):
@@ -15,4 +16,4 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ['owner', 'name', 'password', 'title', 'text_post', 'register_date', 'image', 'text_comment']
+        fields = ['id', 'owner', 'name', 'password', 'title', 'text_post', 'register_date', 'image', 'text_comment']

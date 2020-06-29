@@ -1,17 +1,8 @@
-from django.contrib import auth
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
-
-# Create your views here.
-from django.views.decorators.http import require_http_methods
-from django.views.generic import RedirectView
-from rest_framework import mixins, viewsets, status
-from rest_framework.decorators import action, api_view
+from django.shortcuts import redirect
+from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import ModelViewSet
 
-import blog
 from blog.models import Blog, Comment
 from blog.serializers import BlogSerializer, CommentSerializer
 
@@ -28,6 +19,7 @@ class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+    # 서버에서 redirect 할 필요 없음
     def create(self, request, *args, **kwargs):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
@@ -35,9 +27,6 @@ class CommentViewSet(ModelViewSet):
             return redirect('blog-list')
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
 
 # @api_view(['GET', 'POST'])
 # def comment_list(request):
