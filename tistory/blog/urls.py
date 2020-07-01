@@ -12,8 +12,3 @@ router.register(r'comment', CommentViewSet)
 
 urlpatterns = router.urls
 
-# urlpatterns +=[
-#     path('',views.comment_list),
-#     path('<int:pk>/',views.comment_detail, name='comment-list'),
-# path('commen'
-#     ]

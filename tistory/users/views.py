@@ -1,21 +1,13 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
-# Create your views here.
-from rest_framework.viewsets import ModelViewSet
-
 from users.serializers import UserSerializer
-
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from django.shortcuts import render
-
-# Create your views here.
-from rest_framework import viewsets, mixins, request, status
+from django.contrib.auth import authenticate, get_user_model
+from rest_framework import mixins, status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+
+User = get_user_model()
 
 
 class UserViewSet(mixins.CreateModelMixin,
@@ -29,10 +21,7 @@ class UserViewSet(mixins.CreateModelMixin,
 
     @action(detail=False, methods=['post'])
     def register(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return super().create(request)
 
     @action(detail=False, methods=['post'])
     def login(self, request):
@@ -53,5 +42,4 @@ class UserViewSet(mixins.CreateModelMixin,
     @action(detail=False, methods=['delete'])
     def logout(self, request):
         request.user.auth_token.delete()
-        return Response({"detail": "Successfully logged out."},
-                        status=status.HTTP_200_OK)
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
